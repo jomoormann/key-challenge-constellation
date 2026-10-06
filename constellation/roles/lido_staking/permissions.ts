@@ -1,4 +1,3 @@
-import { encodeKey } from "@zodiaceco/sdk";
 import { custom } from "@zodiaceco/sdk/actions";
 import config from "../../../zodiac.config";
 import { lido_eth_daily } from "../../allowances";
@@ -15,9 +14,7 @@ export default [
       // stETH is minted to msg.sender, which is the vault
       allow.eth.lido.steth.submit(undefined, {
         send: true,
-        // Encoded by hand: unlike c.withinAllowance, the allow kit of
-        // @zodiaceco/sdk 2.4 passes this key through as is
-        etherWithinAllowance: encodeKey(lido_eth_daily.key),
+        etherWithinAllowance: lido_eth_daily.key,
       }),
     ],
   }),
