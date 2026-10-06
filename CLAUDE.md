@@ -11,9 +11,6 @@ Ops Treasury: a small ETH treasury on Ethereum (chain 1) for four people
 budgets. The Operator Vault queues admin changes through a 24-hour Delay, and
 the Security council, run by the Zodiac team, can veto them.
 
-- Export names in `constellation/index.ts` stay lowercase (`treasury_delay`):
-  Zodiac lowercases a node ref used as a permission target but matches refs
-  case-sensitively.
 - Every value-moving step draws on its own daily budget
   (`constellation/allowances/index.ts`, priced 2026-09-29).
 

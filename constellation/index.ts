@@ -34,10 +34,6 @@ import {
 // narrow roles with daily budgets. The Operator Vault queues admin changes
 // through a 24h Delay, and the Security Council can veto them.
 
-// Export names become node refs. Keep them lowercase: Zodiac lowercases a ref
-// used as a permission target (the veto role names the Delay) but matches
-// refs case-sensitively, so `$treasuryDelay` would fail to resolve.
-
 // Governance: proposes treasury changes through the Delay queue. 2/3.
 export const operator_vault = eth.safe["Ops Operator Vault"]({
   nonce: 0n,

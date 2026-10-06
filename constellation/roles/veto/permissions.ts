@@ -6,8 +6,7 @@ import { eth } from "../../context";
 // treasury, so the call runs as the treasury through this Roles Modifier.
 //
 // Written without the allow kit because the Delay is a new node: its address
-// is derived at deploy, and the node reference stands in for it. The Delay's
-// export name must stay lowercase (see constellation/index.ts).
+// is derived at deploy, and the node reference stands in for it.
 export default [
   custom({
     label: "Veto queued treasury transactions",
