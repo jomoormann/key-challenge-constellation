@@ -1,0 +1,25 @@
+{
+  "name": "ops-treasury-constellation",
+  "author": "Zodiac Labs GmbH",
+  "license": "LGPL-3.0-only",
+  "private": true,
+  "packageManager": "bun@1.3.0",
+  "type": "module",
+  "scripts": {
+    "format": "prettier --write .",
+    "pull": "zodiac pull",
+    "pull-org": "zodiac pull-org",
+    "pull-contracts": "zodiac pull-contracts",
+    "prepush": "zodiac pull-org",
+    "push": "bun ./.lib/scripts/push.ts"
+  },
+  "dependencies": {
+    "@zodiaceco/api-types": "^1.11.0",
+    "@zodiaceco/sdk": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5"
+  }
+}
