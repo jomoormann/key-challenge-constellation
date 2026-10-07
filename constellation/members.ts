@@ -1,4 +1,4 @@
-// People and payees. Use either a plain address or, once the person is an org
+// People. Use either a plain address or, once the person is an org
 // user, `eth.user["Full Name"]` (their personal Safe on Ethereum).
 
 // Signers and role members
@@ -31,11 +31,6 @@ if (
   );
 }
 
-// The three whitelisted payroll receivers
-export const PAYEE_1 = "0xE32bBD732D6C27e07B93A47d790fC20C32B95cfe";
-export const PAYEE_2 = "0x89396BAd16EbA0a0957BeF2d0d03EFCf28DEFF0D";
-export const PAYEE_3 = "0xcE7EDA03283f33a0831FEac7Df44aFeAA4A6C3B1";
-
 // A Safe owned by a placeholder can never sign again, so a deployment with
 // one left in would lock the treasury. Refuse to build the spec until every
 // placeholder is replaced; ALLOW_PLACEHOLDERS=1 is for local checks only.
@@ -48,9 +43,6 @@ const placeholders = Object.entries({
   ZODIAC_TEAM_2,
   ZODIAC_TEAM_3,
   ZODIAC_TEAM_4,
-  PAYEE_1,
-  PAYEE_2,
-  PAYEE_3,
 }).filter(([, address]) => /^0x0{36}[a-f]0/.test(address));
 
 if (placeholders.length > 0 && process.env.ALLOW_PLACEHOLDERS !== "1") {

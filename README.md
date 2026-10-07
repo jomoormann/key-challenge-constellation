@@ -19,7 +19,7 @@ flowchart TB
   SC["Ops Security Council<br/>Zodiac team"]
   T["Ops Treasury (vault)"]
   D["Ops Treasury Delay<br/>24h cooldown, 7d expiration"]
-  R["Ops Treasury Roles<br/>8 roles"]
+  R["Ops Treasury Roles<br/>7 roles"]
   SC --> T
   OV -- "module: queues proposals" --> D
   D -- module --> T
@@ -30,19 +30,22 @@ flowchart TB
 
 ## Roles
 
-| Role             | Member           | Allows                                                               | Budget                                         |
-| ---------------- | ---------------- | -------------------------------------------------------------------- | ---------------------------------------------- |
-| `payroll`        | Ana              | `USDC.transfer` to three payroll receivers                           | 133 USDC per day                               |
-| `vendor_payroll` | Ana              | Vendor payments with `USDC.transfer`                                 | 50 USDC per 12 hours                           |
-| `swap`           | Ben              | Wrap and unwrap ETH. CoW orders between WETH, USDC and USDT          | 0.05 WETH, 133 USDC, 133 USDT (per sell token) |
-| `fold_swap`      | Ben              | Wrap ETH. CoW orders that sell WETH for FOLD                         | 0.0187 WETH (50 USD worth)                     |
-| `lido_staking`   | Maria            | Stake ETH with Lido. Withdrawal requests and claims                  | 0.05 ETH                                       |
-| `aave_wsteth`    | Maria            | Wrap and unwrap stETH. Supply wstETH to Aave v3 Core and withdraw it | 0.0401 wstETH (0.05 ETH worth)                 |
-| `morpho_usdc`    | Steve            | Deposit USDC into Steakhouse Prime USDC. Withdraw and redeem         | 133 USDC                                       |
-| `veto`           | Security council | `setTxNonce` on the Delay                                            | none                                           |
+| Role           | Member           | Allows                                                               | Budget                                             |
+| -------------- | ---------------- | -------------------------------------------------------------------- | -------------------------------------------------- |
+| `payroll`      | Ana              | `WETH.transfer` to Ana, Ben or Maria                                 | 0.0187 WETH (50 USD worth), refilled by the minute |
+| `swap`         | Ben              | Wrap and unwrap ETH. CoW orders between WETH, USDC and USDT          | 0.05 WETH, 133 USDC, 133 USDT (per sell token)     |
+| `fold_swap`    | Ben              | Wrap ETH. CoW orders that sell WETH for FOLD                         | 0.0187 WETH (50 USD worth)                         |
+| `lido_staking` | Maria            | Stake ETH with Lido. Withdrawal requests and claims                  | 0.05 ETH                                           |
+| `aave_wsteth`  | Maria            | Wrap and unwrap stETH. Supply wstETH to Aave v3 Core and withdraw it | 0.0401 wstETH (0.05 ETH worth)                     |
+| `morpho_usdc`  | Steve            | Deposit USDC into Steakhouse Prime USDC. Withdraw and redeem         | 133 USDC                                           |
+| `veto`         | Security council | `setTxNonce` on the Delay                                            | none                                               |
 
 Budgets are set in `constellation/allowances/index.ts`, at prices of
-2026-09-29 (ETH/USD 2,675.30, 1.245174 stETH per wstETH).
+2026-09-29 (ETH/USD 2,675.30, 1.245174 stETH per wstETH). The payroll budget
+starts empty and refills by 1/1440 every minute, so it is full after 24 hours.
+
+Zodiac merges roles and budgets into what is deployed, by name. To remove one,
+set it to `null` in `constellation/index.ts`.
 
 ## Contracts
 

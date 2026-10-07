@@ -5,7 +5,6 @@ import {
   morpho_usdc,
   payroll,
   swap,
-  vendor_payroll,
   veto,
 } from "./roles";
 import {
@@ -13,11 +12,10 @@ import {
   fold_weth_daily,
   lido_eth_daily,
   morpho_usdc_daily,
-  payroll_usdc_daily,
+  payroll_weth,
   swap_usdc_daily,
   swap_usdt_daily,
   swap_weth_daily,
-  vendor_usdc_12h,
 } from "./allowances";
 import { eth } from "./context";
 import {
@@ -62,9 +60,8 @@ export const treasury = eth.safe["Ops Treasury"]({
   vault: true,
 });
 
-// Eight roles, one Roles Modifier:
-//   payroll         Ana    USDC to 3 whitelisted receivers, 133 USDC/day
-//   vendor_payroll  Ana    vendor payments in USDC, 50 USDC per 12h
+// Seven roles, one Roles Modifier:
+//   payroll         Ana    WETH to Ana, Ben and Maria, 50 USD worth, refilled by the minute
 //   swap            Ben    CoW ETH/WETH <-> USDC <-> USDT, 0.05 ETH worth/day per sell token
 //   fold_swap       Ben    CoW WETH -> FOLD, 50 USD of WETH/day
 //   lido_staking  Maria  stake ETH (0.05/day), unstake via the withdrawal queue
@@ -72,6 +69,9 @@ export const treasury = eth.safe["Ops Treasury"]({
 //   morpho_usdc   Steve  Steakhouse Prime USDC, 133 USDC/day
 //   veto          Security Council  setTxNonce on the Delay, nothing else
 // owner = treasury: changing a policy is itself a treasury transaction.
+//
+// Zodiac merges roles and allowances into what is on chain by name: a role
+// left out stays as deployed. `null` removes it.
 export const treasury_roles = eth.roles["Ops Treasury Roles"]({
   nonce: 0n,
   owner: treasury,
@@ -79,24 +79,25 @@ export const treasury_roles = eth.roles["Ops Treasury Roles"]({
   target: treasury,
   roles: {
     payroll,
-    vendor_payroll,
     swap,
     fold_swap,
     lido_staking,
     aave_wsteth,
     morpho_usdc,
     veto,
+    vendor_payroll: null, // removed 2026-10-07
   },
   allowances: {
-    payroll_usdc_daily,
+    payroll_weth,
     swap_weth_daily,
     swap_usdc_daily,
     swap_usdt_daily,
     lido_eth_daily,
     aave_wsteth_daily,
     morpho_usdc_daily,
-    vendor_usdc_12h,
     fold_weth_daily,
+    payroll_usdc_daily: null, // replaced by payroll_weth 2026-10-07
+    vendor_usdc_12h: null, // removed with vendor_payroll 2026-10-07
   },
 });
 

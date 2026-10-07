@@ -11,8 +11,10 @@ Ops Treasury: a small ETH treasury on Ethereum (chain 1) for four people
 budgets. The Operator Vault queues admin changes through a 24-hour Delay, and
 the Security council, run by the Zodiac team, can veto them.
 
-- Every value-moving step draws on its own daily budget
+- Every value-moving step draws on its own budget
   (`constellation/allowances/index.ts`, priced 2026-09-29).
+- Zodiac merges `roles` and `allowances` into the deployed state by name: a
+  role or budget left out stays on chain. Remove one with `null`.
 
 ## Project map
 

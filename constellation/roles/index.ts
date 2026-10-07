@@ -1,5 +1,4 @@
 export * as payroll from "./payroll";
-export * as vendor_payroll from "./vendor_payroll";
 export * as swap from "./swap";
 export * as fold_swap from "./fold_swap";
 export * as lido_staking from "./lido_staking";

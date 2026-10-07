@@ -1,16 +1,16 @@
 import { transfer } from "@zodiaceco/sdk/actions";
 import config from "../../../zodiac.config";
-import { PAYEE_1, PAYEE_2, PAYEE_3 } from "../../members";
-import { payroll_usdc_daily } from "../../allowances";
+import { ANA, BEN, MARIA } from "../../members";
+import { payroll_weth } from "../../allowances";
 
-// USDC transfers to the three whitelisted receivers only, 133 USDC per day
-// across all three. No approve, no transferFrom: nothing else can move USDC.
-// Changing the receiver list is a governance action on the treasury.
+// WETH transfers to Ana, Ben and Maria only, up to 50 USD worth across all
+// three, refilled by the minute. No approve, no transferFrom. Changing the
+// receiver list is a governance action on the treasury.
 export default [
   transfer({
-    label: "Payroll in USDC (3 receivers, 133 per day)",
-    tokens: [config.contracts.eth.usdc],
-    to: [PAYEE_1, PAYEE_2, PAYEE_3],
-    allowance: payroll_usdc_daily,
+    label: "Payroll in WETH (Ana, Ben, Maria, 50 USD per day)",
+    tokens: [config.contracts.eth.weth],
+    to: [ANA, BEN, MARIA],
+    allowance: payroll_weth,
   }),
 ] satisfies Permissions;
